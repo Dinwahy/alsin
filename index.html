@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Alsintan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .menu {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .menu-item {
+            padding: 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 150px;
+        }
+
+        .menu-item.pinjam {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .menu-item.kembali {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        .menu-item.kritik {
+            background-color: #f44336;
+            color: white;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        label {
+            margin: 10px 0 5px;
+        }
+
+        input, button {
+            margin-bottom: 15px;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Manajemen Gudang Alsintan</h1>
+        <div class="menu">
+            <button class="menu-item pinjam" onclick="showForm('pinjam')">Peminjaman</button>
+            <button class="menu-item kembali" onclick="showForm('kembali')">Pengembalian</button>
+            <button class="menu-item kritik" onclick="showForm('kritik')">Saran dan Kritik</button>
+        </div>
+        <div id="form-container"></div>
+    </div>
+    
+    <script>
+        function showForm(type) {
+            let formHtml = '';
+            switch(type) {
+                case 'pinjam':
+                    formHtml = `
+                        <form action="submit_pinjam.php" method="post">
+                            <label>Nama Peminjam:</label>
+                            <input type="text" name="nama_peminjam" required><br>
+                            <label>Jenis Alsin:</label>
+                            <input type="text" name="jenis_alsin" required><br>
+                            <label>Tanggal Pinjam:</label>
+                            <input type="date" name="tanggal_pinjam" required><br>
+                            <label>Jangka Pinjam (hari/jam):</label>
+                            <input type="number" name="jangka_pinjam" required><br>
+                            <button type="submit">Submit</button>
+                        </form>`;
+                    break;
+                case 'kembali':
+                    formHtml = `
+                        <form action="submit_kembali.php" method="post" enctype="multipart/form-data">
+                            <label>Nama Peminjam:</label>
+                            <input type="text" name="nama_peminjam" required><br>
+                            <label>Jenis Alsin:</label>
+                            <input type="text" name="jenis_alsin" required><br>
+                            <label>Tanggal Pengembalian:</label>
+                            <input type="date" name="tanggal_kembali" required><br>
+                            <label>Foto Bukti Pengembalian:</label>
+                            <input type="file" name="foto_bukti" required><br>
+                            <button type="submit">Submit</button>
+                        </form>`;
+                    break;
+                case 'kritik':
+                    formHtml = `
+                        <form action="submit_kritik.php" method="post">
+                            <label>Saran:</label>
+                            <input type="text" name="saran" required><br>
+                            <label>Kritik:</label>
+                            <input type="text" name="kritik" required><br>
+                            <button type="submit">Submit</button>
+                        </form>`;
+                    break;
+            }
+            document.getElementById('form-container').innerHTML = formHtml;
+        }
+    </script>
+</body>
+</html>
